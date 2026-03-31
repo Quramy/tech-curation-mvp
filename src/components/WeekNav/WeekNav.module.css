@@ -1,0 +1,37 @@
+.nav {
+  padding: 1rem 0;
+}
+
+.empty {
+  font-size: 0.8125rem;
+  color: var(--muted);
+  font-style: italic;
+}
+
+.list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.link {
+  display: block;
+  padding: 0.375rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.8125rem;
+  color: var(--foreground);
+  text-decoration: none;
+  transition: background 0.15s;
+}
+
+.link:hover {
+  background: var(--tag-bg);
+  text-decoration: none;
+}
+
+.active {
+  background: var(--accent-light);
+  color: var(--accent);
+  font-weight: 600;
+}

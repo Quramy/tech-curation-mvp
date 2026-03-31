@@ -1,6 +1,7 @@
 import {
   startOfWeek,
   endOfWeek,
+  subWeeks,
   getISOWeek,
   getISOWeekYear,
   format,
@@ -76,6 +77,13 @@ export function getWeekInfo(date: Date): WeekInfo {
  */
 export function getCurrentWeekInfo(): WeekInfo {
   return getWeekInfo(new Date());
+}
+
+/**
+ * 先週の WeekInfo を返す
+ */
+export function getPreviousWeekInfo(): WeekInfo {
+  return getWeekInfo(subWeeks(new Date(), 1));
 }
 
 /**
