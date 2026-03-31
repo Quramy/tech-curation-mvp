@@ -1,7 +1,7 @@
 import { Readability } from "@mozilla/readability";
 import { JSDOM } from "jsdom";
 import { prisma } from "../lib/prisma";
-import { weekArticleFilter, getCurrentWeekInfo, getWeekInfoFromKey } from "../lib/week";
+import { weekArticleFilter, getPreviousWeekInfo, getWeekInfoFromKey } from "../lib/week";
 
 type ExtractedContent = {
   title: string | null;
@@ -86,7 +86,7 @@ export async function extractAllPending(weekKey?: string): Promise<{
   extracted: number;
   failed: number;
 }> {
-  const weekInfo = weekKey ? getWeekInfoFromKey(weekKey) : getCurrentWeekInfo();
+  const weekInfo = weekKey ? getWeekInfoFromKey(weekKey) : getPreviousWeekInfo();
   const articles = await prisma.article.findMany({
     where: { status: "fetched", ...weekArticleFilter(weekInfo) },
     select: { id: true, title: true, url: true },
