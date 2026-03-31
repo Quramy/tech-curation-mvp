@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Tech Digest",
+  title: "Tech Curation",
   description: "技術ブログ週次ダイジェスト",
 };
 

@@ -6,7 +6,7 @@ export function Header() {
     <header className={styles.header}>
       <div className={styles.inner}>
         <Link href="/" className={styles.logo}>
-          Tech Digest
+          Tech Curation
         </Link>
         <nav className={styles.nav}>
           <Link href="/">Digest</Link>
