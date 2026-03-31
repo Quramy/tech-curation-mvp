@@ -7,18 +7,46 @@
     "build": "next build",
     "start": "next start",
     "lint": "biome check",
-    "format": "biome format --write"
+    "format": "biome format --write",
+    "db:setup": "docker compose up -d && npx prisma migrate deploy && npx prisma db seed",
+    "pipeline": "tsx scripts/pipeline.ts",
+    "pipeline:collect": "tsx scripts/pipeline.ts collect",
+    "pipeline:extract": "tsx scripts/pipeline.ts extract",
+    "pipeline:process": "tsx scripts/pipeline.ts process-articles",
+    "pipeline:weekly": "tsx scripts/pipeline.ts process-weekly",
+    "pipeline:all": "tsx scripts/pipeline.ts all",
+    "pipeline:retry": "tsx scripts/pipeline.ts retry",
+    "pipeline:status": "tsx scripts/pipeline.ts status"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
+    "@mozilla/readability": "^0.6.0",
+    "@prisma/adapter-pg": "^7.6.0",
+    "@prisma/client": "^7.6.0",
+    "date-fns": "^4.1.0",
+    "jsdom": "^29.0.1",
     "next": "16.2.1",
+    "openai": "^6.33.0",
+    "pg": "^8.20.0",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "rss-parser": "^3.13.0",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@biomejs/biome": "2.2.0",
+    "@react-grab/mcp": "^0.1.29",
+    "@types/jsdom": "^28.0.1",
     "@types/node": "^20",
+    "@types/pg": "^8.20.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "dotenv": "^17.3.1",
+    "prisma": "^7.6.0",
+    "react-grab": "^0.1.29",
+    "tsx": "^4.21.0",
     "typescript": "^5"
   }
 }

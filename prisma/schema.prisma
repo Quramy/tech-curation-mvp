@@ -1,0 +1,113 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Feed {
+  id        String   @id @default(uuid())
+  name      String
+  url       String   @unique
+  type      String   @default("rss")
+  isActive  Boolean  @default(true) @map("is_active")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  articles Article[]
+
+  @@map("feeds")
+}
+
+model Article {
+  id           String    @id @default(uuid())
+  feedId       String    @map("feed_id")
+  title        String
+  url          String    @unique
+  publishedAt  DateTime? @map("published_at")
+  fetchedAt    DateTime  @default(now()) @map("fetched_at")
+  authorName   String?   @map("author_name")
+  contentText  String?   @map("content_text")
+  contentHtml  String?   @map("content_html")
+  ogImageUrl   String?   @map("og_image_url")
+  status       String    @default("fetched")
+  errorMessage String?   @map("error_message")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+
+  feed    Feed             @relation(fields: [feedId], references: [id], onDelete: Cascade)
+  summary ArticleSummary?
+  topics  ArticleTopic[]
+  score   ArticleScore?
+
+  @@map("articles")
+}
+
+model ArticleSummary {
+  id            String   @id @default(uuid())
+  articleId     String   @unique @map("article_id")
+  shortSummary  String   @map("short_summary")
+  mediumSummary String   @map("medium_summary")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  article Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+
+  @@map("article_summaries")
+}
+
+model ArticleTopic {
+  id        String @id @default(uuid())
+  articleId String @map("article_id")
+  topic     String
+
+  article Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+
+  @@index([articleId])
+  @@map("article_topics")
+}
+
+model ArticleScore {
+  id          String   @id @default(uuid())
+  articleId   String   @unique @map("article_id")
+  totalScore  Int      @map("total_score")
+  layer1Score Int      @map("layer1_score")
+  layer2Score Int      @map("layer2_score")
+  reasonTags  String   @map("reason_tags")
+  shortReason String?  @map("short_reason")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  article Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+
+  @@map("article_scores")
+}
+
+model UserProfile {
+  id                          String   @id @default(uuid())
+  profileSummary              String   @map("profile_summary")
+  interestsJson               String   @map("interests_json")
+  preferredArticleTypesJson   String   @map("preferred_article_types_json")
+  deprioritizedArticleTypesJson String @map("deprioritized_article_types_json")
+  createdAt                   DateTime @default(now()) @map("created_at")
+  updatedAt                   DateTime @updatedAt @map("updated_at")
+
+  @@map("user_profile")
+}
+
+model WeeklyDigestCache {
+  id                  String   @id @default(uuid())
+  weekKey             String   @unique @map("week_key")
+  weekTitle           String   @map("week_title")
+  weekStartDate       DateTime @map("week_start_date")
+  weekEndDate         DateTime @map("week_end_date")
+  summaryText         String   @map("summary_text")
+  highlightedTopicsJson String @map("highlighted_topics_json")
+  sourceArticleCount  Int      @map("source_article_count")
+  generatedAt         DateTime @default(now()) @map("generated_at")
+  updatedAt           DateTime @updatedAt @map("updated_at")
+
+  @@map("weekly_digest_cache")
+}
