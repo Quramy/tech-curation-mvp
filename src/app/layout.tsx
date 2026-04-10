@@ -37,7 +37,13 @@ export default function RootLayout({
       </head>
       <body>
         <Header />
-        <main style={{ maxWidth: "var(--max-width)", margin: "0 auto", padding: "1.5rem" }}>
+        <main
+          style={{
+            maxWidth: "var(--max-width)",
+            margin: "0 auto",
+            padding: "1.5rem",
+          }}
+        >
           {children}
         </main>
       </body>

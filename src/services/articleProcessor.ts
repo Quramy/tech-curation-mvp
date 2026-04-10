@@ -1,7 +1,11 @@
 import { z } from "zod";
 import { openai } from "../lib/openai";
 import { prisma } from "../lib/prisma";
-import { weekArticleFilter, getPreviousWeekInfo, getWeekInfoFromKey } from "../lib/week";
+import {
+  weekArticleFilter,
+  getPreviousWeekInfo,
+  getWeekInfoFromKey,
+} from "../lib/week";
 import { TOPIC_CANDIDATES } from "../lib/topics";
 import type { UserProfile } from "../generated/prisma/client";
 
@@ -180,7 +184,9 @@ export async function processAllPending(
     throw new Error("User profile not found. Run seed first.");
   }
 
-  const weekInfo = weekKey ? getWeekInfoFromKey(weekKey) : getPreviousWeekInfo();
+  const weekInfo = weekKey
+    ? getWeekInfoFromKey(weekKey)
+    : getPreviousWeekInfo();
   const articles = await prisma.article.findMany({
     where: { status: "extracted", ...weekArticleFilter(weekInfo) },
     select: { id: true, title: true },

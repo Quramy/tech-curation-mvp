@@ -1,5 +1,9 @@
 import { prisma } from "../../lib/prisma";
-import { getWeekInfoFromKey, weekArticleFilter } from "../../lib/week";
+import {
+  getWeekInfoFromKey,
+  weekArticleFilter,
+  isCurrentWeek,
+} from "../../lib/week";
 import { WeeklySummary } from "../WeeklySummary/WeeklySummary";
 import { TopicTags } from "../TopicTags/TopicTags";
 import { ArticleCard } from "../ArticleCard/ArticleCard";
@@ -56,6 +60,12 @@ export async function DigestContent({ weekKey }: Props) {
         </section>
       )}
 
+      {isCurrentWeek(weekKey) && (
+        <p className={styles.currentWeekNotice}>
+          この週はまだ終了していません。最新のデータを取得するにはパイプラインを再実行してください。
+        </p>
+      )}
+
       <PipelineSection>
         <PipelineStatus status={pipelineStatus} />
         <PipelineTrigger weekKey={weekInfo.weekKey} />
@@ -84,9 +94,7 @@ export async function DigestContent({ weekKey }: Props) {
                   }
                   totalScore={article.score?.totalScore ?? 0}
                   reasonTags={
-                    article.score
-                      ? JSON.parse(article.score.reasonTags)
-                      : []
+                    article.score ? JSON.parse(article.score.reasonTags) : []
                   }
                   ogImageUrl={article.ogImageUrl}
                 />

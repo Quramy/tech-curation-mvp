@@ -87,6 +87,13 @@ export function getPreviousWeekInfo(): WeekInfo {
 }
 
 /**
+ * 指定された weekKey が今週かどうか判定する
+ */
+export function isCurrentWeek(weekKey: string): boolean {
+  return weekKey === getWeekKey(new Date());
+}
+
+/**
  * weekKey (e.g. "2026-W14") から WeekInfo を復元する
  */
 export function getWeekInfoFromKey(weekKey: string): WeekInfo {

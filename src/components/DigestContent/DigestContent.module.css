@@ -24,3 +24,13 @@
   color: var(--muted);
   font-style: italic;
 }
+
+.currentWeekNotice {
+  font-size: 0.875rem;
+  color: var(--warning, #b45309);
+  background-color: var(--warning-bg, #fef3c7);
+  border: 1px solid var(--warning-border, #fde68a);
+  border-radius: 0.375rem;
+  padding: 0.625rem 0.875rem;
+  margin-bottom: 0.75rem;
+}

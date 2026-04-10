@@ -5,7 +5,7 @@ import { processAllPending } from "../src/services/articleProcessor";
 import { generateWeeklySummary } from "../src/services/weeklyProcessor";
 import { prisma } from "../src/lib/prisma";
 import {
-  getPreviousWeekInfo,
+  getCurrentWeekInfo,
   getWeekInfoFromKey,
   weekArticleFilter,
 } from "../src/lib/week";
@@ -15,7 +15,7 @@ const weekKeyArg = process.argv[3]; // optional: e.g. "2026-W13"
 
 function resolveWeekKey(): string {
   if (weekKeyArg) return weekKeyArg;
-  return getPreviousWeekInfo().weekKey;
+  return getCurrentWeekInfo().weekKey;
 }
 
 async function main() {
@@ -49,9 +49,7 @@ async function main() {
       break;
     }
     case "process-weekly": {
-      console.log(
-        `Starting weekly summary generation for ${weekKey}...`,
-      );
+      console.log(`Starting weekly summary generation for ${weekKey}...`);
       await generateWeeklySummary(weekKey);
       console.log("\nDone.");
       break;

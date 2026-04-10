@@ -1,7 +1,11 @@
 import { z } from "zod";
 import { openai } from "../lib/openai";
 import { prisma } from "../lib/prisma";
-import { getWeekInfo, getCurrentWeekInfo, getWeekInfoFromKey } from "../lib/week";
+import {
+  getWeekInfo,
+  getCurrentWeekInfo,
+  getWeekInfoFromKey,
+} from "../lib/week";
 
 const WeeklyLLMResultSchema = z.object({
   summary_text: z.string(),
@@ -134,4 +138,3 @@ export async function generateWeeklySummary(weekKey?: string): Promise<void> {
 
   console.log(`Weekly summary saved for ${weekInfo.weekKey}`);
 }
-

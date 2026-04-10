@@ -54,7 +54,8 @@ export async function collectSingleFeed(
           title: item.title || "Untitled",
           url: normalizedUrl,
           publishedAt: item.isoDate ? new Date(item.isoDate) : null,
-          authorName: (item.creator as string) || (item.author as string) || null,
+          authorName:
+            (item.creator as string) || (item.author as string) || null,
           status: "fetched",
         },
       });

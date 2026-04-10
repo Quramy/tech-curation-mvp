@@ -26,7 +26,9 @@ export function PipelineStatus({ status }: Props) {
           <span className={styles.count}>{status.processed}</span>
           <span className={styles.label}>Processed</span>
         </div>
-        <div className={`${styles.stat} ${status.failed > 0 ? styles.error : ""}`}>
+        <div
+          className={`${styles.stat} ${status.failed > 0 ? styles.error : ""}`}
+        >
           <span className={styles.count}>{status.failed}</span>
           <span className={styles.label}>Failed</span>
         </div>

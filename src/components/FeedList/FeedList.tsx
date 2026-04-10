@@ -38,9 +38,7 @@ export function FeedList({ feeds }: Props) {
                 type="button"
                 className={styles.toggleBtn}
                 disabled={isPending}
-                onClick={() =>
-                  startTransition(() => toggleFeedActive(feed.id))
-                }
+                onClick={() => startTransition(() => toggleFeedActive(feed.id))}
               >
                 {feed.isActive ? "ON" : "OFF"}
               </button>
