@@ -37,6 +37,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.2.0",
+    "@playwright/cli": "^0.1.8",
     "@react-grab/mcp": "^0.1.29",
     "@types/jsdom": "^28.0.1",
     "@types/node": "^20",
