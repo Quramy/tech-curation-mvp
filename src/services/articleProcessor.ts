@@ -12,7 +12,7 @@ import type { UserProfile } from "../generated/prisma/client";
 const LLMArticleResultSchema = z.object({
   short_summary: z.string(),
   medium_summary: z.string(),
-  topics: z.array(z.string()).min(1).max(3),
+  topics: z.array(z.string()).min(0).max(3),
   layer1_score: z.number().int().min(0).max(100),
   layer2_score: z.number().int().min(0).max(100),
   total_score: z.number().int().min(0).max(100),
@@ -54,7 +54,7 @@ ${truncatedContent}
 Produce a JSON object with these fields:
 - "short_summary": 1-2 sentence summary in Japanese
 - "medium_summary": 3-5 sentence summary in Japanese
-- "topics": 1-3 topics from this list ONLY: [${topicList}]
+- "topics": 0-3 topics from this list ONLY: [${topicList}]. If none genuinely apply, return an empty array — do not force a fit.
 - "layer1_score": 0-100 integer (article intrinsic value: specificity, depth, practicality, novelty)
 - "layer2_score": 0-100 integer (match with user profile: topic match, type match, depth match, practical relevance)
 - "total_score": 0-100 integer (= round(layer1_score * 0.45 + layer2_score * 0.55))

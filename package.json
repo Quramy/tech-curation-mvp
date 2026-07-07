@@ -16,7 +16,8 @@
     "pipeline:weekly": "tsx scripts/pipeline.ts process-weekly",
     "pipeline:all": "tsx scripts/pipeline.ts all",
     "pipeline:retry": "tsx scripts/pipeline.ts retry",
-    "pipeline:status": "tsx scripts/pipeline.ts status"
+    "pipeline:status": "tsx scripts/pipeline.ts status",
+    "diagnose:failures": "tsx scripts/diagnose-failures.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
