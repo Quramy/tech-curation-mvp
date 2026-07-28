@@ -4,6 +4,16 @@ import { normalizeUrl } from "../lib/url";
 
 const parser = new RssParser();
 
+// Feeds sometimes put non-string values here (e.g. nextjs.org/feed.xml emits
+// `<author><name>...</name></author>`, which rss-parser hands back as an
+// object). Author name is optional metadata, so drop anything that is not a
+// plain non-empty string.
+function toAuthorName(value: unknown): string | null {
+  if (typeof value !== "string") return null;
+  const trimmed = value.trim();
+  return trimmed === "" ? null : trimmed;
+}
+
 export type CollectionResult = {
   feedId: string;
   feedName: string;
@@ -55,7 +65,9 @@ export async function collectSingleFeed(
           url: normalizedUrl,
           publishedAt: item.isoDate ? new Date(item.isoDate) : null,
           authorName:
-            (item.creator as string) || (item.author as string) || null,
+            toAuthorName(item.creator) ??
+            toAuthorName(item.author) ??
+            toAuthorName(item["dc:creator"]),
           status: "fetched",
         },
       });
